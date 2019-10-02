@@ -1,8 +1,9 @@
 # Pre config
 
 sudo apt-get update
- 
-sudo install pip python3
+
+sudo apt-get install python3 
+sudo apt-get install python-pip
 
 sudo pip install pytelegrambotapi pyowm pytz
 
