@@ -6,5 +6,3 @@ jungle_zip = zipfile.ZipFile(r'/home/rr/archive.zip', 'w')
 jungle_zip.write(r'/home/rr/pyTelegramBotAPI.git', compress_type=zipfile.ZIP_DEFLATED)
 
 jungle_zip.close()
-
-
