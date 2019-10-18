@@ -1,0 +1,12 @@
+
+files = ['.txt', '.jpg']
+
+def check_file (name):
+        ext = name.find( '.')
+        ext2 = name[ext:]
+        if ext2 in files:
+                print ('Yes')
+        else:
+                print ("No")
+
+check_file ('file.txt')
