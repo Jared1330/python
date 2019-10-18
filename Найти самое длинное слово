@@ -1,0 +1,10 @@
+def check_words (sen):
+        inp2 = str(sen)
+        inp = inp2.split()
+        res = []
+        for word in inp:
+                if len(word) > len(res):
+                        res = word
+        print (res)
+
+check_words ('a bb ccc dddd')
