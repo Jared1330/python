@@ -1,0 +1,65 @@
+https://www.youtube.com/watch?v=mjyKFuwXVxY
+
+# -----------------------------------
+# Program by Ruslan  Sezonenko
+#
+# Version  Date      Info
+# 1.0      10/21/19  Iniatial Version
+#
+#
+#
+# ------------------------------------
+
+import os, time, sys
+
+FOLDERS = [
+           "/home/ubuntu/test/"
+          ]
+TOTAL_DELETED_SIZE = 0
+TOTAL_DELETED_FILE = 0
+TOTAL_DELETED_DIRS = 0
+
+nowTime = time.time()
+ageTime = nowTime - 60*60*24*7
+
+def delete_old_files(folder):
+        for path, dirs, files in os.walk(folder):
+                for file in files:
+                        fileName = os.path.join(path, file)   # get full path to file
+                        fileTime = os.path.getmtime(fileName) # get last modifited time of file
+                        print (fileTime, ageTime)
+                        if fileTime < ageTime:
+                                sizeFile = os.path.getsize(fileName)
+                                TOTAL_DELETED_SIZE += sizeFile   # Count SUM of all free space
+                                TOTAL_DELETED_FILE += 1    # Count number of deleted files
+                                print ("deleteing file: " + str(fileName) )
+                                os.remove(fileName)     # Delete file
+
+def delete_empty_dir(folder):
+        global TOTAL_DELETED_DIRS
+        empty_folders_in_this_run = 0
+        for path, dirs, files in os.walk(folder):
+                if (not dirs) and (not files):
+                        TOTAL_DELETED_DIRS +=1
+                        empty_folders_in_this_run += 1
+                        print ("deleting EMPTY Dir: " + str (path))
+                        os.rmdir(path)
+        if empty_folders_in_this_run > 0:
+                delete_empty_dir(folder)
+
+
+#  =================== MAIN ======================
+starttime = time.asctime()
+for folder in FOLDERS:
+        delete_old_files(folder)   #Delete old foles
+        delete_empty_dir(folder)    # Delete empty folders
+finishtime = time.asctime()
+
+
+print ("-----------------------")
+print ("START TIME: "                  +  str(starttime))
+print ("Total deleted size: "          +  str(TOTAL_DELETED_SIZE/1024/1024/1024) + "KB")
+print ("Total Deleted files: "         +  str(TOTAL_DELETED_FILE))
+print ("Total Deleted Empty folders: " +  str (TOTAL_DELETED_DIRS))
+print ("Finish time"                   +  str(finishtime) )
+print ("-----------------------")
