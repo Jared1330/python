@@ -1,0 +1,31 @@
+import sys
+myfile = sys.argv[1]
+
+
+def qty_lines(f):
+        file = open('s.txt', 'r')
+        lines = 0
+        for line in file:
+                lines = lines + 1
+        print ('Lines are ==> ' + str(lines))
+
+
+def qty_words (f) :
+        with open('s.txt', 'r') as file:
+                data = file.read
+                g = str(data)
+                s = g.split()
+                l = len(s)
+        print('Words are ==> ' + str(l))
+
+
+def qty_letters (f):
+        with open('s.txt', 'r') as file:
+                data = file.read().replace('\n', '')
+                data2 = data.replace(' ','' )
+        print ('Letters are  ==> ' + str(len(data2)))
+
+
+qty_lines(myfile)
+qty_letters(myfile)
+qty_words(myfile)
