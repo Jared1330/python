@@ -1,0 +1,33 @@
+======================== 1 ==================
+oldlist = [1, 2, 4, 3, 7, 9]
+
+def bubble_sort(mylist):
+        last_item = len(mylist) - 1
+        for z in range (0, last_item):
+                for x in range (0, last_item):
+                        if mylist[x] > mylist[x+1]:
+                                mylist[x], mylist[x+1] = mylist[x+1], mylist[x]
+        return mylist
+print ('Old list: ', oldlist)
+newlist = bubble_sort(oldlist)
+print ("New list: ", newlist)
+
+
+
+====================== 2 =================
+old_list = [5, 4, 3, 2, 1]
+index_of_last_item = len (old_list) - 1
+n = index_of_last_item
+
+def go(n):
+        if n == 0:
+                return
+        else:
+                i = 0
+                while i < index_of_last_item:
+                        if old_list[i] > old_list[i+1]:
+                                old_list[i], old_list[i+1] = old_list[i+1], old_list[i]
+                        print (i, old_list)
+                        i = i+1
+        go(n-1)
+go(n)
