@@ -1,0 +1,84 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sqlite3
+import os
+import sys
+from datetime import datetime
+
+
+fileName = sys.argv[1]
+current_user = os.getlogin()
+current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " UTC+0 "
+
+#========== LOGS =================
+def create_db():
+        """Creatinon database """
+        db = sqlite3.connect("database_sqlite.db")
+        c = db.cursor()
+        c.execute("""CREATE TABLE deleted_files
+                     ( Id, User, Date, File)
+                  """)
+        c.close()
+
+def write_log ():
+        """ Write logs """
+        db = sqlite3.connect("database_sqlite.db")
+        c = db.cursor()
+
+        #======  Get next ID =======
+        id = c.execute ("""
+                   Select Id FROM deleted_files ORDER BY Id DESC LIMIT 1
+                   """)
+        current_id = id.fetchall()
+        b = len(current_id)
+        for x in current_id:
+                b = x
+        cc = b[0]
+        next_id = cc+1
+
+        #========= Write logs =======
+        t = (next_id, current_user, current_time, fileName)
+        c.execute("""INSERT INTO deleted_files (Id, User, Date, File)
+                     VALUES (?, ?, ?, ?)
+                  """, t)
+        db.commit()
+        c.close()
+
+def read_log():
+        """ Read logs """
+        db = sqlite3.connect("database_sqlite.db")
+        c = db.cursor()
+        print("Id   User       Date                           File")
+        for row in c.execute("SELECT * FROM deleted_files ORDER BY id  "):
+                print(row)
+                
+#============ DELETE FILES ==================
+def delete_file(fileName):
+        """ Delete mentioned file and call write_log() and read_log() functions """
+        os.remove(fileName)
+        print ("Deleteing file: " + str(fileName))
+        write_log()
+        read_log()
+
+
+
+#================ MAIN ===================
+
+#delete_file(fileName)
+
+#===========================================
+
+
+
+#create_db()
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
