@@ -1,0 +1,66 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sqlite3
+import csv
+
+#==== MAIN SQL QUERY ====
+sql = 'insert into deleted_files({0}) values ({1})'
+#========================
+
+query = sql
+csv_fileName = "data.csv"
+
+
+def update_from_csv(csv_fileName):
+        """
+        Update DB with query provided at the top ==> MAIN SQL QUERY
+        """
+        with open (csv_fileName, 'r') as f:
+            reader = csv.reader(f)
+            columns = next(reader)
+            query_format = query.format(','.join(columns), ','.join('?' * len(columns)))
+            print (query_format)
+            db = sqlite3.connect("database_sqlite.db")
+            c = db.cursor()
+            for data in reader:
+                c.execute(query_format, data)
+            db.commit()
+
+def sql_query_test():
+        """
+        Test func for manual query
+        """
+        db = sqlite3.connect("database_sqlite.db")
+        c = db.cursor()
+        c.execute(""" delete from deleted_files where id in ("3","4")
+                  """)
+        db.commit()
+        c.close()
+
+def read_db():
+        """
+        Read data from DB
+        """
+        db = sqlite3.connect("database_sqlite.db")
+        c = db.cursor()
+        print("Id   User       Date                           File")
+        for row in c.execute("SELECT * FROM deleted_files ORDER BY id  "):
+                print(row)
+
+def read_csv_file(csv_fileName):
+        Read a csv file
+        """
+        with open (csv_fileName, "r") as f:
+                reader = csv.reader(f)
+                for row in reader:
+                        print(" ".join(row))   # результат - строка
+                        #print(row)            #  результат - массив
+
+
+
+#update_from_csv(filename)
+read_csv_file(csv_fileName)
+
+#sql_query_test()
+#read_db()
