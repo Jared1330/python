@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+
+import sys
+
+
+try:
+        temp = sys.argv[1]
+        temp_input = int(temp[:-1].strip())    # Delete spaces and take all expect last symbol
+        scale = temp[-1].capitalize()          # Change to capital case letters and take last symbol
+except:
+        print ("Wrong format were entered. Try like this: 5C or 24F")
+        exit()
+
+
+if __name__ == "__main__":
+        if scale == "C":
+                """If scale is Celsius"""
+                resF = temp_input * 9/5 + 32
+                resK = temp_input + 273.15
+                print ("F: " +  str(resF), "K: " + str(resK))
+        elif scale == "F":
+                """If scale is Fahrenheit"""
+                resC = (temp_input - 32) * 5/9
+                resK = resC + 273.15
+                print ('"C: "' +  str(resC), '"K: "' + str(resK))
+        elif scale == "K":
+                """If scale is Kelvin"""
+                resC = temp_input - 273
+                resF = (temp_input - 273) * 9/5 + 32
+                print ('"C: "' +  str(resC), '"F: "' + str(resF))
+        else:
+                print ("Wrong scale. Try like this: 5C or 24F")
+                exit()
+
