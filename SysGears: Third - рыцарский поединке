@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+import random
+
+
+first = random.uniform(10,30)
+second = random.uniform(10,30)
+i = 0
+who_walks_first = "first"
+
+
+scale_first = (100-first)/20
+scale_second = (100-second)/20
+
+
+print ("Start values:" +  "\n"+  "First: "+ str(first) + "\n" + "Second " + str(second) + "\n")
+print ("Scales: " + str(scale_first) + " "  + str(scale_second) + "\n" )
+
+
+def shot():
+        print ("First" + " has shotted")
+        print ("First chanse was : " + str(first) + "\n" + "Second change was " + str(second))
+
+def step():
+        global first
+        global second
+        global i
+        if i==0:
+                pass
+        else:
+                print ("Step number " + str(i) + " : "  + str(first), str(second))
+        first = first  + scale_first
+        second = second + scale_second
+        i = i+1
+
+
+def main():
+        if who_walks_first == "first":
+                if first < (second + scale_second):
+                        shot()
+                        print ("Next values would be: " + str(first) + " " + str(second+scale_second))
+                else:
+                        step()
+                        main()
+
+
+main()
+
+
