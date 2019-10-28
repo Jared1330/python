@@ -1,16 +1,19 @@
 input_count = int(input("how much levels?:"))
 
+if (input_count > 8) or (input_count < 3):
+        print ("out of range 3-8")
+        exit ()
 
 def move(f,t) :
-    print("move disc from {} to {}!".format(f,t))
+    print("Move from {} ==>  {}!".format(f,t))
 
-def hanoi(input_count,f,h,t) :
+def go(input_count,f,h,t) :
     if input_count==0 :
         pass
     else :
-        hanoi(input_count-1,f,t,h)
+        go(input_count-1,f,t,h)
         move(f,t)
-        hanoi(input_count-1,h,f,t)
+        go(input_count-1,h,f,t)
 
 
-hanoi(input_count,"Slot A "," Buffer "," Slot C")
+go(input_count,"Slot A ","Buffer", "Slot C")
