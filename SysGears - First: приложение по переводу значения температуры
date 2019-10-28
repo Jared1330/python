@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import json
 
 
 try:
@@ -12,23 +13,86 @@ except:
         exit()
 
 
+
 if __name__ == "__main__":
         if scale == "C":
-                """If scale is Celsius"""
                 resF = temp_input * 9/5 + 32
                 resK = temp_input + 273.15
-                print ("F: " +  str(resF), "K: " + str(resK))
+                data = {"C" : temp_input, "F" : resF, "K" : resK}
+                with open ("data_file.json", "w") as f:
+                        json.dump(data, f)
         elif scale == "F":
-                """If scale is Fahrenheit"""
                 resC = (temp_input - 32) * 5/9
                 resK = resC + 273.15
-                print ('"C: "' +  str(resC), '"K: "' + str(resK))
+                data = {"C" : resC, "F" : temp_input, "K" : resK}
+                with open ("data_file.json", "w") as f:
+                        json.dump(data, f)
         elif scale == "K":
-                """If scale is Kelvin"""
                 resC = temp_input - 273
                 resF = (temp_input - 273) * 9/5 + 32
-                print ('"C: "' +  str(resC), '"F: "' + str(resF))
+                data = {"C" : resC, "F" : resF, "K" : temp_input}
+                with open ("data_file.json", "w") as f:
+                        json.dump(data, f)
         else:
                 print ("Wrong scale. Try like this: 5C or 24F")
                 exit()
+                
+                
+                
+                
+                
+                
+=========================== Ромы =======================
 
+import json
+Far_let='F'
+Cel_let='C'
+Kel_let='K'
+
+def change_temp(input_tempr):
+  if list (input_tempr)[-1] == Far_let :
+    try :
+      Far_temp = int(input_tempr[0:-1])
+      Cel_temp= int((Far_temp-32)/1.8)
+      Kel_temp= int(Cel_temp+273)
+    except:
+      print ("not ingeger")
+  elif list (input_tempr)[-1] == Cel_let:
+    try :
+      Cel_temp = int(input_tempr[0:-1])
+      Kel_temp= int(Cel_temp+273)
+      Far_temp = int((Cel_temp * 1.8)+32)
+    except:
+      print ("not ingeger")
+  elif list (input_tempr)[-1] == Kel_let:
+    try :
+      Kel_temp = int(input_tempr[0:-1])
+      Cel_temp = int(Kel_temp - 273)
+      Far_temp = int((Cel_temp * 1.8)+32)
+    except:
+      print ("not ingeger")
+  else:
+    raise Exception("its not K / F /C ")
+
+  data = { Far_let : Far_temp,
+  Cel_let : Cel_temp,
+  Kel_let : Kel_temp
+  }
+  print (data)
+  with open("data_file.json", "w") as tempr_file:
+    json.dump(data, tempr_file)
+
+
+
+change_temp("5C")
+
+
+
+
+
+                
+                
+                
+                
+                
+                
