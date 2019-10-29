@@ -39,3 +39,79 @@ def main():
                 main()
 
 main()
+
+
+
+#====================== Рома ======================
+
+import random
+
+Knights = ["Tom","Skott","Karl","Jon","Don","Jack","Mike"]
+First_Knight = random.choice(Knights)
+Knights.remove(First_Knight)
+Second_Knight = random.choice(Knights)
+order = input("Who should do step first %s or %s?:" %(First_Knight,Second_Knight))
+start_probability_1 = random.uniform(0.1,0.3)
+start_probability_2 = random.uniform(0.1,0.3)
+  
+class killer():
+  steps=20
+  def __init__ (self, name, start_probability, shot = True, live=True):
+    self.name = name
+    self.start_probability=start_probability
+    self.probability = start_probability
+    self.shot = True
+    self.live = True
+
+  def do_choice (self, oponent_shot_status, oponent_probability):
+    print (" %s Doing his move \n distance %i \n oponent probability is %f" %(self.name,killer.steps,oponent_probability))
+    if oponent_shot_status == False:
+      print ("%s doing %i steps" %(self.name,killer.steps))
+      self.probability = 1
+      steps = 0
+      return self.do_shot()
+    else:
+      if  (self.probability >= oponent_probability + (1-oponent_probability)/killer.steps) or self.probability*100 > 50:
+       return self.do_shot()
+      else:
+        return self.do_step()
+    
+  def do_step (self):
+    print ("%s doing step as his probability is %f" %(self.name,self.probability))
+    killer.steps -= 1
+    self.probability =  self.start_probability + ((1-self.start_probability)/20) * (20-killer.steps)
+    print ("now %s probability is %f" %(self.name,self.probability))
+    return True
+  
+  def do_shot(self):
+    print ("%s doing shot" %(self.name))
+    self.shot = False
+    if self.probability >= random.random():
+      print ("oponent killed")
+      return False
+    else:
+      print ("MISSED!")
+      return True
+
+
+if order == First_Knight:
+  first = killer (First_Knight,start_probability_1)
+  second = killer (Second_Knight,start_probability_2)
+elif order==Second_Knight:
+  first = killer (Second_Knight,start_probability_2)
+  second = killer (First_Knight,start_probability_1)
+else:
+  raise "Knight name is wrong"
+
+while (first.live and second.live):
+  second.live = first.do_choice(second.shot, second.probability)
+  if second.live:
+    first.live = second.do_choice(first.shot, first.probability)
+  else:
+    print ("%s WIN!!!" %first.name)
+    break
+else: 
+  print ("%s WIN!!!" %second.name)
+
+
+
