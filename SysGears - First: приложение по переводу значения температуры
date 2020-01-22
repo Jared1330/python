@@ -85,14 +85,3 @@ def change_temp(input_tempr):
 
 
 change_temp("5C")
-
-
-
-
-
-                
-                
-                
-                
-                
-                
