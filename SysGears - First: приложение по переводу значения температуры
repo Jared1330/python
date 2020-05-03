@@ -4,6 +4,8 @@ import sys
 import json
 
 
+
+
 try:
         temp = sys.argv[1]
         temp_input = int(temp[:-1].strip())    # Delete spaces and take all expect last symbol
