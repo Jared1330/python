@@ -1,6 +1,6 @@
 #!/bin/python3
 import shutil # For Copyfile
-import os, csv
+import os
 import sys
 
 
