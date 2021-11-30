@@ -1,0 +1,43 @@
+import os
+import csv
+from datetime import date, datetime
+from mysql.connector import connect, Error
+
+sql = """select * from *"""
+# YYYYMMDD date to add to filename
+today = datetime.today().strftime('%Y%m%d')
+# Current time for logs
+now = datetime.now()
+
+try:
+    print ('========== Current Time = '+str(now)+' ==========')
+    print ('Connecting to DB...')
+    con = connect(user='*****', password='*****',
+                  host='*****', port = '*****',
+                  database='*****')
+    print ('Connected to DB !\n')
+
+    print ('Executing select SQL...')
+    cursor = con.cursor()
+    cursor.execute(sql)
+    print ('Successfully executed select SQL !\n')
+
+    print ('Writing SQL values to input file...')
+    rows = cursor.fetchall()
+    input_file = open('input_'+str(today)+'.csv', 'w')
+    myFile = csv.writer(input_file)
+    myFile.writerows(rows)
+    input_file.close()
+    print ('Successfully written values to input file !\n')
+
+    print ('Running java app...')
+    os.system('java filename')
+    print ('Successfully finished !\n')
+
+    print ('Uploading files to sftp...')
+    os.system('sh upload_to_sftp.sh')    
+    print ('Successfully uploaded ! (this message is from pythin script, not from sftp)')
+    print ('========================================================')
+
+except Error as e:
+    print(e)
